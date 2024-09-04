@@ -1,0 +1,31 @@
+{% block title %}
+    Sign In Code
+{% endblock title %}
+
+{% block load %}
+    {% load static %}
+    {% load custom_filters %}
+    <link href="{% static 'css/styles.css' %}" rel="stylesheet" />
+{% endblock load %}
+
+{% block content %}
+    <div class="container" style="background-color: lightcyan; max-width: null">
+        <form method="post">
+            {% csrf_token %}
+          <div class="form-group mb-5 mt-5">
+            <label class="mt-5" for="username">Логин</label>
+            <input name="username" type="text" class="form-control" id="username" placeholder="Login">
+          </div>
+          <div class="form-group mb-5 mt-5">
+            <label class="mt-5" for="code">Код</label>
+            <input name="code" type="text" class="form-control" id="code" placeholder="Code">
+          </div>
+          <button type="submit" class="btn btn-primary mb-5">Подтвердить код</button>
+        </form>
+    </div>
+    <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Подтвердить код">
+    </form>
+{% endblock content %}

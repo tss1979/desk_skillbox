@@ -1,0 +1,27 @@
+{% block title %}
+    Sign In
+{% endblock title %}
+
+{% block load %}
+    {% load static %}
+    {% load custom_filters %}
+    <link href="{% static 'css/styles.css' %}" rel="stylesheet" />
+{% endblock load %}
+
+
+{% block content %}
+    <div class="container" style="background-color: lightcyan; max-width: null">
+        <form method="post">
+            {% csrf_token %}
+          <div class="form-group mb-5 mt-5">
+            <label class="mt-5" for="exampleInputEmail1">Логин</label>
+            <input name="username" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Login">
+          </div>
+          <div class="form-group mb-5">
+            <label for="exampleInputPassword1">Пароль</label>
+            <input name="password" type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+          </div>
+          <button type="submit" class="btn btn-primary mb-5">Отправить код</button>
+        </form>
+    </div>
+{% endblock content %}
