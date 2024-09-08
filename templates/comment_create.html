@@ -1,0 +1,24 @@
+{% extends 'flatpages/default.html' %}
+{% block title %}
+    Create Message
+{% endblock title %}
+
+{% block load %}
+    {% load static %}
+    {% load custom_filters %}
+    <link href="{% static 'css/styles.css' %}" rel="stylesheet" />
+{% endblock load %}
+
+
+{% block content %}
+    <div class="container" style="background-color: lightcyan; max-width: null">
+        <form method="post">
+            {% csrf_token %}
+          <div class="form-group mb-5 mt-5">
+            <label class="mt-5" for="id_text">Текст</label>
+            <input name="text" type="text" class="form-control" id="id_text" placeholder="Text">
+          </div>
+          <button type="submit" class="btn btn-primary mb-5">Отправить</button>
+        </form>
+    </div>
+{% endblock content %}

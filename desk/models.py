@@ -6,6 +6,11 @@ KIND_DICT = {'T': 'Танки', 'Н': 'Хилы', 'D': 'ДД', 'S': 'Торго�
              'M': 'Мастера заклинаний'}
 
 NULLABLE = {'blank': True, 'null': True}
+
+class Subscription(models.Model):
+    user = models.OneToOneField(User , on_delete=models.CASCADE)
+
+
 class Post(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -22,7 +27,10 @@ class Post(models.Model):
         self.save()
 
     def dislike(self):
-        self.rating += -1
+        if self.rating > 0:
+            self.rating -= 1
+        else:
+            self.rating = 0
         self.save()
 
 

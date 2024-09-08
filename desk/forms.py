@@ -3,26 +3,37 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django_summernote.widgets import SummernoteWidget
 
-from desk.models import Post
+
+from desk.models import Post, Comment
 
 
 class PostForm(forms.ModelForm):
+    content = forms.CharField(widget=SummernoteWidget())
+
     def __init__(self, *args, **kwags):
         super().__init__(*args, **kwags)
-        self.fields['author'].empty_label = 'Not'
+
 
     class Meta:
            model = Post
            fields = [
-               'author',
                'post_kind',
                'title',
                'content',
            ]
            widgets = {
                'title': forms.TextInput(attrs={'class': 'form-control form-control-lg'}),
-               'content': forms.CharField(widget=SummernoteWidget()),
-               'post_kind': forms.CheckboxSelectMultiple(),
+               'post_kind': forms.Select,
+           }
+
+class CreateCommentForm(forms.ModelForm):
+    class Meta:
+           model = Comment
+           fields = [
+               'text',
+           ]
+           widgets = {
+               'text': forms.TextInput(attrs={'class': 'form-control form-control-lg'}),
            }
 
 

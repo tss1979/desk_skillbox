@@ -1,0 +1,66 @@
+{% extends 'flatpages/default.html' %}
+
+{% block title %}
+    Desk
+{% endblock title %}
+
+{% block load %}
+    {% load static %}
+    {% load custom_filters %}
+    <link href="{% static 'css/styles.css' %}" rel="stylesheet" />
+{% endblock load %}
+
+{% block content %}
+        <!-- Responsive navbar-->
+        <section class="pt-4">
+            <div class="container px-lg-5">
+                <h2 class="fs-4 fw-bold">Сообщения</h2>
+                <!-- Page Features-->
+                <div class="row gx-lg-12">
+                       {% if comments %}
+                            {% for comment in comments %}
+                                <div class="card" style="width: 100%;">
+                                      <div class="card-body">
+                                          {% if comment.target_user.pk == current_user.pk %}
+                                            <h5 class="card-title">{{ comment.sender.username }}</h5>
+                                          {% else %}
+                                            <h5 class="card-title">{{ comment.target_user.username }}</h5>
+                                          {% endif %}
+                                        <p>{{ comment.post.title }}</p>
+                                        <p>{{ comment.text }}</p>
+                                        <div class="row">
+                                            <a class="btn btn-danger" style="width: 20%;" href="{% url 'delete_comment' comment.pk %}">Удалить сообщение</a>
+                                        </div>
+                                      </div>
+
+                                </div>
+                            {% endfor %}
+                       {% else %}
+                            <h2>Нет сообщений</h2>
+                       {% endif %}
+                </div>
+                <div style="text-align: center" class="fs-4 fw-bold">
+                    {% if page_obj.has_previous %}
+                        <a href="?page=1">1</a>
+                        {% if page_obj.previous_page_number != 1 %}
+                            {% if page_obj.previous_page_number|minus:1 != 1 %}
+                                ...
+                            {% endif %}
+                            <a href="?page={{ page_obj.previous_page_number }}">{{ page_obj.previous_page_number }}</a>
+                        {% endif %}
+                    {% endif %}
+                    {{ page_obj.number }}
+                    {% if page_obj.has_next %}
+                        <a href="?page={{ page_obj.next_page_number }}">{{ page_obj.next_page_number }}</a>
+                        {% if paginator.num_pages != page_obj.next_page_number %}
+                            {% if paginator.num_pages|minus:page_obj.next_page_number > 1 %}
+                                ...
+                            {% endif %}
+                            <a href="?page={{ page_obj.paginator.num_pages }}">{{ page_obj.paginator.num_pages }}</a>
+                        {% endif %}
+                    {% endif %}
+                </div>
+            </div>
+
+        </section>
+{% endblock content %}

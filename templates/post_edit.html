@@ -1,0 +1,26 @@
+{% extends 'flatpages/default.html' %}
+{% block title %}
+Создание и редактирование формы
+{% endblock title %}
+
+{% block load %}
+    {% load static %}
+    {% load custom_filters %}
+    <link href="{% static 'css/styles.css' %}" rel="stylesheet" />
+{% endblock load %}
+
+
+{% block content %}
+    <div class="container" style="max-width: null">
+
+        <div class="p-4 p-lg-5 bg-light rounded-3 text-center">
+            <h1>Создать (Отредактировать) Пост</h1>
+            <form action="" method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <input type="submit" value="Сохранить" class="btn btn-primary btn-lg">
+            </form>
+        </div>
+
+    </div>
+{% endblock content %}
