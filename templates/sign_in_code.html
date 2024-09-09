@@ -11,22 +11,18 @@
 
 {% block content %}
     <div class="container" style="background-color: lightcyan; max-width: null">
+        <h2 class="mb-5 mt-5">На вашу почту отпроавлен одноразовый пароль</h2>
         <form method="post">
             {% csrf_token %}
           <div class="form-group mb-5 mt-5">
-            <label class="mt-5" for="username">Логин</label>
-            <input name="username" type="text" class="form-control" id="username" placeholder="Login">
+            <label for="username">Логин</label>
+            <input name="username" type="text" class="form-control" id="username" placeholder="Логин">
           </div>
-          <div class="form-group mb-5 mt-5">
-            <label class="mt-5" for="code">Код</label>
-            <input name="code" type="text" class="form-control" id="code" placeholder="Code">
+          <div class="form-group mb-5">
+            <label for="code">Код</label>
+            <input name="code" type="text" class="form-control" id="code" placeholder="Код">
           </div>
           <button type="submit" class="btn btn-primary mb-5">Подтвердить код</button>
         </form>
     </div>
-    <form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="Подтвердить код">
-    </form>
 {% endblock content %}

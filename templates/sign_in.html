@@ -1,6 +1,6 @@
 {% extends 'flatpages/default.html' %}
 {% block title %}
-    Sign In
+    Залогинится
 {% endblock title %}
 
 {% block load %}
@@ -16,11 +16,11 @@
             {% csrf_token %}
           <div class="form-group mb-5 mt-5">
             <label class="mt-5" for="exampleInputEmail1">Логин</label>
-            <input name="username" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Login">
+            <input name="username" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Логин">
           </div>
           <div class="form-group mb-5">
             <label for="exampleInputPassword1">Пароль</label>
-            <input name="password" type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+            <input name="password" type="password" class="form-control" id="exampleInputPassword1" placeholder="Пароль">
           </div>
           <button type="submit" class="btn btn-primary mb-5">Отправить код</button>
         </form>

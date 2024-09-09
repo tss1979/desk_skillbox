@@ -1,7 +1,7 @@
 {% extends 'flatpages/default.html' %}
 
 {% block title %}
-    Desk
+    Поиск
 {% endblock title %}
 
 {% block load %}
@@ -17,7 +17,7 @@
                 <!-- Page Features-->
                 <form action="" method="get" class="mb-5">
                     {{ filterset.form.as_p }}
-                    <input class="btn btn-primary btn-lg" type="submit" value="Search" />
+                    <input class="btn btn-primary btn-lg" type="submit" value="Найти"/>
                 </form>
                 <div class="row gx-lg-12">
                        {% if posts %}

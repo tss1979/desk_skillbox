@@ -1,23 +1,21 @@
-import ssl
 
-from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import logout, authenticate, login
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.views.generic import ListView, DetailView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
-import requests
-import certifi
+
 
 from .filter import PostFilter
 from .forms import BaseRegisterForm, SignInForm, CheckCodeForm, CreateCommentForm, PostForm
-from .utils import get_subscribed
+from .utils import get_subscribed, generate_code
 from django.core.mail import send_mail
 
 from desk.models import Post, OneTimeCode, Comment, Subscription
 from django.contrib.auth.models import User
 import time, random
+
 
 
 # Create your views here.
@@ -27,6 +25,7 @@ class PostsList(ListView):
     template_name = 'posts.html'
     context_object_name = 'posts'
     paginate_by = 3
+
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -61,7 +60,6 @@ class PostsListSearch(ListView):
         context['filterset'] = self.filterset
         context['current_user'] = self.request.user
         context['subscribed'] = get_subscribed()
-        context = ssl.create_default_context(cafile=certifi.where())
         return context
 
 class PostDetail(DetailView):
@@ -180,12 +178,7 @@ def logout_view(request):
     logout(request)
     return redirect('/')
 
-def generate_code():
-    t = list(str(time.time()))
-    s = random.choices(['q', 'w', 'e', 'r', 't', 'y', 'z', 'x', 'c', 'v'], k=3)
-    t.extend(s)
-    random.shuffle(t)
-    return ''.join(t)
+
 
 def sign_in_view(request):
     if request.method == 'POST':
@@ -198,7 +191,6 @@ def sign_in_view(request):
             if user is not None:
                 code = generate_code()
                 OneTimeCode.objects.create(user=user, code=code)
-                form = CheckCodeForm
                 send_mail(
                     "Desk code",
                     f"Ваш код - { code }",
@@ -206,7 +198,7 @@ def sign_in_view(request):
                     [user.email],
                     fail_silently=False,
                 )
-                render(request, 'sign_in_code.html', {'form': form})
+                return HttpResponseRedirect("/signin_code")
             else:
                 return HttpResponseRedirect("/signin")
     form = SignInForm
@@ -219,12 +211,15 @@ def sign_in_with_code_view(request):
             cd = form.cleaned_data
             user_name = cd['username']
             code = cd['code']
-            if OneTimeCode.objects.filter(code=code, user__username=user_name).exists():
-                user = OneTimeCode.objects.filter(code=code, user__username=user_name).get('user')
+            user = OneTimeCode.objects.filter(code=code, user__username=user_name)[0].user
+            if user is not None:
                 login(request, user)
+                OneTimeCode.objects.filter(code=code, user__username=user_name).delete()
                 return HttpResponseRedirect("/")
             else:
                 return HttpResponseRedirect("/signin")
+        else:
+            return redirect(request.META.get('HTTP_REFERER'))
     form = CheckCodeForm
     return render(request, 'sign_in_code.html', {'form': form})
 

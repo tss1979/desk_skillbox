@@ -56,7 +56,7 @@ class SignInForm(forms.Form):
     password = forms.CharField(widget=forms.PasswordInput)
 
 class CheckCodeForm(forms.Form):
-    username = forms.CharField(label = "Username")
+    username = forms.CharField(label = "Логин")
     code = forms.CharField(label = "Код")
 
 

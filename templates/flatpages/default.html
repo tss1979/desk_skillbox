@@ -39,10 +39,10 @@
                             <li class="nav-item"><a class="nav-link" href="{% url 'out_comments' %}">Исходящие сообщения</a></li>
                         {% endif %}
                         {% if current_user.is_authenticated %}
-                            <li class="nav-item"><a class="nav-link" href="logout">Logout</a></li>
+                            <li class="nav-item"><a class="nav-link" href="logout">Выход</a></li>
                         {% else %}
-                            <li class="nav-item"><a class="nav-link" href="signin">SignIn</a></li>
-                            <li class="nav-item"><a class="nav-link" href="signup">SignUp</a></li>
+                            <li class="nav-item"><a class="nav-link" href="signin">Войти</a></li>
+                            <li class="nav-item"><a class="nav-link" href="signup">Зарегистрироваться</a></li>
                         {% endif %}
 
                     </ul>
@@ -54,7 +54,7 @@
         {% endblock content %}
 
         <footer class="py-5 bg-dark">
-            <div class="container"><p class="m-0 text-center text-white">Copyright &copy; Your Website 2023</p></div>
+            <div class="container"><p class="m-0 text-center text-white">Copyright &copy; Desk {% now 'Y' %}</p></div>
         </footer>
 
     </body>

@@ -1,7 +1,7 @@
 {% extends 'flatpages/default.html' %}
 
 {% block title %}
-    Desk
+    Зарегистрироваться
 {% endblock title %}
 
 {% block load %}
@@ -17,27 +17,27 @@
             {% csrf_token %}
           <div class="form-group mb-5 mt-5">
             <label for="id_username">Логин</label>
-            <input name="username" type="text" class="form-control" id="id_username" aria-describedby="emailHelp" placeholder="Login">
+            <input name="username" type="text" class="form-control" id="id_username" aria-describedby="emailHelp" placeholder="Логин">
           </div>
           <div class="form-group mb-5">
             <label for="id_first_name">Имя</label>
-            <input name="first_name" type="text" class="form-control" id="id_first_name" aria-describedby="emailHelp" placeholder="Login">
+            <input name="first_name" type="text" class="form-control" id="id_first_name" aria-describedby="emailHelp" placeholder="Имя">
           </div>
          <div class="form-group mb-5">
             <label for="id_last_name">Фамилия</label>
-            <input name="last_name" type="text" class="form-control" id="id_last_name"aria-describedby="emailHelp" placeholder="Login">
+            <input name="last_name" type="text" class="form-control" id="id_last_name"aria-describedby="emailHelp" placeholder="Фамилия">
           </div>
           <div class="form-group mb-5 mt-5">
             <label for="id_email">Email</label>
-            <input name="email" type="email" class="form-control" id="id_email" aria-describedby="emailHelp" placeholder="Login">
+            <input name="email" type="email" class="form-control" id="id_email" aria-describedby="emailHelp" placeholder="email@mail.ru">
           </div>
           <div class="form-group mb-5">
             <label for="id_password1">Пароль</label>
-            <input name="password1" type="password" class="form-control" id="id_password1" placeholder="Password">
+            <input name="password1" type="password" class="form-control" id="id_password1" placeholder="Пароль">
           </div>
           <div class="form-group mb-5">
             <label for="id_password2">Повторите Пароль</label>
-            <input name="password2" type="password" class="form-control" id="id_password2" placeholder="Password">
+            <input name="password2" type="password" class="form-control" id="id_password2" placeholder="Подтвердите пароль">
           </div>
           <input type="submit" class="btn btn-primary mb-5">Зарегистрироваться</input>
         </form>
