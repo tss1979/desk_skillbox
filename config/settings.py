@@ -136,12 +136,8 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 X_FRAME_OPTIONS = 'SAMEORIGIN'
 SUMMERNOTE_THEME = 'bs4'
 
-# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_BACKEND = 'desk.backends.email_backend.EmailBackend'
 EMAIL_HOST = 'smtp.yandex.ru'
-# EMAIL_HOST = 'smtp.gmail.com'
-# EMAIL_HOST_USER = '#'
-# EMAIL_HOST_PASSWORD = '#'
 EMAIL_USE_TLS = False
 EMAIL_PORT = 465
 EMAIL_USE_SSL = True
@@ -150,4 +146,7 @@ EMAIL_HOST_PASSWORD = 'ryttgrkaidrlcbwt'
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 SERVER_EMAIL = EMAIL_HOST_USER
 EMAIL_ADMIN = EMAIL_HOST_USER
+
+APSCHEDULER_DATETIME_FORMAT = "N j, Y, f:s a"
+APSCHEDULER_RUN_NOW_TIMEOUT = 25
 

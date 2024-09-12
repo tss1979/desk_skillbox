@@ -39,6 +39,7 @@ class CreateCommentForm(forms.ModelForm):
 
 class BaseRegisterForm(UserCreationForm):
     email = forms.EmailField(label = "Email")
+    username = forms.CharField(label = "Логин")
     first_name = forms.CharField(label = "Имя")
     last_name = forms.CharField(label = "Фамилия")
 

@@ -1,7 +1,7 @@
 {% extends 'flatpages/default.html' %}
 
 {% block title %}
-    Письма
+    Сообщения
 {% endblock title %}
 
 {% block load %}
@@ -11,11 +11,13 @@
 {% endblock load %}
 
 {% block content %}
-        <!-- Responsive navbar-->
         <section class="pt-4">
             <div class="container px-lg-5">
                 <h2 class="fs-4 fw-bold">Сообщения</h2>
-                <!-- Page Features-->
+                <form action="" method="get" class="mb-5">
+                    {{ filterset.form.as_p }}
+                    <input class="btn btn-primary btn-lg" type="submit" value="Найти"/>
+                </form>
                 <div class="row gx-lg-12">
                        {% if comments %}
                             {% for comment in comments %}
@@ -23,7 +25,7 @@
                                       <div class="card-body">
                                         <h5 class="card-title">Отправитель - {{ comment.sender.username }}</h5>
                                         <h5 class="card-title">Получатель - {{ comment.target_user.username }}</h5>
-                                        <p>К посту {{ comment.post.title }}</p>
+                                        <p>К посту - {{ comment.post.title }}</p>
                                         <p>{{ comment.text }}</p>
                                         <div class="row">
                                             {% if not comment.is_confirmed and comment.sender.pk != current_user.pk %}
@@ -64,3 +66,5 @@
 
         </section>
 {% endblock content %}
+
+

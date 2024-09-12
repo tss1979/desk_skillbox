@@ -40,6 +40,7 @@ class Comment(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
     text = models.TextField()
+    is_confirmed = models.BooleanField(default=False)
 
 class OneTimeCode(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user')
