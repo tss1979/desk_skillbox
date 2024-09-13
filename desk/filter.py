@@ -2,7 +2,6 @@ from django_filters import FilterSet, ModelChoiceFilter, CharFilter, DateTimeFil
 from .models import Post, User, Comment
 from django import forms
 
-
 class PostFilter(FilterSet):
     date = DateTimeFilter(field_name='created_at', lookup_expr='gt', label='Начиная с даты')
     date.field.widget = forms.DateTimeInput(attrs={'type': 'date'})
@@ -18,17 +17,28 @@ class PostFilter(FilterSet):
        model = Post
        fields = ['title', 'date', 'author']
 
-
 class CommentFilter(FilterSet):
+
+    def __init__(self, *args, **kwargs):
+        user_id = kwargs['request']
+        super(CommentFilter, self).__init__(*args, **kwargs)
+        if user_id:
+            self.filters['post'].queryset = Post.objects.filter(author_id=user_id)
+            self.filters['post'].label = 'Пост'
+            self.filters['post'].empty_label = 'Любой'
+
+
     date = DateTimeFilter(field_name='created_at', lookup_expr='gt', label='Начиная с даты')
     date.field.widget = forms.DateTimeInput(attrs={'type': 'date'})
     text = title = CharFilter(field_name='text', lookup_expr='contains', label='Текст сообщения')
+
     sender = ModelChoiceFilter(
         field_name='sender',
         empty_label='Любой',
         queryset=User.objects.all(),
         label='Отправитель'
     )
+
     target_user = ModelChoiceFilter(
         field_name='target_user',
         empty_label='Любой',
@@ -38,4 +48,4 @@ class CommentFilter(FilterSet):
 
     class Meta:
        model = Comment
-       fields = ['text', 'date', 'sender', 'target_user']
+       fields = ['text', 'date', 'sender', 'target_user', 'post']

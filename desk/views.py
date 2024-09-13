@@ -5,7 +5,7 @@ from django.shortcuts import render, redirect
 from django.views.generic import ListView, DetailView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
-
+from urllib3 import request
 
 from .filter import PostFilter, CommentFilter
 from .forms import BaseRegisterForm, SignInForm, CheckCodeForm, CreateCommentForm, PostForm
@@ -73,7 +73,7 @@ class CommentListSearch(ListView):
         qs_out = qs.filter(sender=self.request.user.pk)
         qs_in = qs.filter(target_user=self.request.user.pk)
         letters = (qs_in  | qs_out ).distinct()
-        self.filterset = CommentFilter(self.request.GET, letters)
+        self.filterset = CommentFilter(self.request.GET, request=self.request.user.pk, queryset=letters)
         return self.filterset.qs
 
     def get_context_data(self, **kwargs):

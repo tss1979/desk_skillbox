@@ -26,7 +26,7 @@ def update_comment_is_confirmed(sender, instance, created, **kwargs):
     if instance.is_confirmed and not created:
         send_mail(
             subject='Ваше сообщение принято',
-            message=f'Ваше сообщение {comment.text} принято',
+            message=f'Ваше сообщение {instance.text} принято',
             from_email='serege1.tashkinov@yandex.ru',
             recipient_list=[instance.sender.email,]
         )
